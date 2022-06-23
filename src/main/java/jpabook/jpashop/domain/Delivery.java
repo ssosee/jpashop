@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ public class Delivery {
      * 연관관계의 주인은 아무곳에 해도 상관 없다.
      */
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Order order;
 
     private Address address;

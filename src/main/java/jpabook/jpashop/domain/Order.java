@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -93,12 +94,12 @@ public class Order {
         order.setMember(member);
         order.setDelivery(delivery);
 
-        /***
-         *              for(OrderItem orderItem : orderItems) {
-         *                 order.changeOrderItem(orderItem);
-         *             }
-         */
-        Arrays.stream(orderItems).forEachOrdered(order::changeOrderItem);
+
+        for(OrderItem orderItem : orderItems) {
+            order.changeOrderItem(orderItem);
+        }
+
+        //Arrays.stream(orderItems).forEachOrdered(order::changeOrderItem);
 
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());

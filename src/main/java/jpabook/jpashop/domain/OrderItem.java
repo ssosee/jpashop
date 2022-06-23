@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jpabook.jpashop.domain.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class OrderItem {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 
     private int orderPrice;
@@ -53,7 +55,7 @@ public class OrderItem {
 
     //==비지니스 로직==//
     public void cancel() {
-        getItem().addStorck(count);
+        getItem().addStock(count);
     }
 
     public int getTotalPrice() {

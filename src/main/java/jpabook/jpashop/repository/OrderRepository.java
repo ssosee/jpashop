@@ -1,9 +1,8 @@
 package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderStatus;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDto;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -40,7 +39,7 @@ public class OrderRepository {
         //language=JPAQL
         String jpql = "select o From Order o join o.member m";
         boolean isFirstCondition = true;
-//주문 상태 검색
+        //주문 상태 검색
         if (orderSearch.getOrderStatus() != null) {
             if (isFirstCondition) {
                 jpql += " where";
@@ -50,7 +49,7 @@ public class OrderRepository {
             }
             jpql += " o.status = :status";
         }
-//회원 이름 검색
+        //회원 이름 검색
         if (StringUtils.hasText(orderSearch.getMemberName())) {
             if (isFirstCondition) {
                 jpql += " where";
@@ -69,5 +68,18 @@ public class OrderRepository {
             query = query.setParameter("name", orderSearch.getMemberName());
         }
         return query.getResultList();
+    }
+
+    /**
+     * 100% 이해 해야한다.!!
+     * Lazy 무시하고 한번에 조회
+     * join fetch는 jpa만 있는 문법
+     * @return
+     */
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery("select o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d", Order.class)
+                .getResultList();
     }
 }
