@@ -27,7 +27,8 @@ import java.util.stream.Collectors;
  * 1. 엔티티를 dto로 변환하는 방법을 채택
  * 2. 필요하면 패치 조인으로 성능 최적화
  * 3. 2번으로 안되면 dto로 직접 조회
- * 4. jpa가 제공하는 네이티브SQL이나 JDBC Template을 사용해서 SQL을 직접 사용용 */
+ * 4. jpa가 제공하는 네이티브SQL이나 JDBC Template을 사용해서 SQL을 직접 사용용
+ * */
 @RestController
 @RequiredArgsConstructor
 public class OrderSimpleApiController {

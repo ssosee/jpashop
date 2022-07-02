@@ -82,4 +82,37 @@ public class OrderRepository {
                 " join fetch o.delivery d", Order.class)
                 .getResultList();
     }
+
+    /**
+     * 중복데이터 발생
+     * 뻥튀기..! ㅠ0
+     *
+     * 면 넣으면 해결!!!
+     *
+     * 해당 sql문을 직접 http://localhost:8082에 접속해서 실행해보면
+     * distinct가 있을 때, 없을 때 동일한것을 알수 있다...
+     *
+     * 그런데 jpa에서 자체적으로 order_id값이 같으면 알아서 중복을 제거해준다.
+     *
+     * 단점
+     *  페이징 불가능
+     * @return
+     */
+    public List<Order> findAllWithItem() {
+        return em.createQuery("select distinct o from Order o" +
+                " join fetch o.member" +
+                " join fetch o.delivery" +
+                " join fetch o.orderItems oi" +
+                " join fetch oi.item i", Order.class)
+                .getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery("select o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
 }

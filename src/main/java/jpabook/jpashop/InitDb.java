@@ -82,9 +82,9 @@ public class InitDb {
             Member member = createMember("userB", "2", "22");
             em.persist(member);
 
-            Book book1 = createBook("STRING1", 10000);
+            Book book1 = createBook("SPRING1", 10000);
 
-            Book book2 = createBook("STRING2", 20000);
+            Book book2 = createBook("SPRING2", 20000);
 
             em.persist(book1);
             em.persist(book2);
